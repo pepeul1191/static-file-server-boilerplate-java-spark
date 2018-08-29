@@ -1,4 +1,4 @@
-# Java Spark Static File Server 
+# Static File Server Boilerplate Java Spark
 
 Crear proyecto con Maven
 
@@ -7,6 +7,10 @@ Crear proyecto con Maven
 Crear war usando Maven:
 
     $ mvn package
+
+Cargar dependencias bower y npm:
+
+    $ bower install && npm install
 
 Ejecutar Main Class usando Maven:
 
