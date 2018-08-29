@@ -1,0 +1,31 @@
+{
+  "name": "backbonejs-plugins-swp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "express-fileupload": "^0.4.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-concat-css": "^2.3.0",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-plumber": "^1.1.0",
+    "gulp-replace": "^0.6.1",
+    "gulp-uglify": "^3.0.0",
+    "gulp-watch": "^4.3.11",
+    "morgan": "^1.9.0",
+    "path": "^0.12.7",
+    "unirest": "^0.5.1"
+  },
+  "devDependencies": {},
+  "description": "BackboneJS Plugins SWP",
+  "main": "server.js",
+  "repository": "https://github.com/pepeul1191/swp-backbone-js-plugins.git",
+  "author": "Pepe Valdivia <<jvaldivia@softweb.pe>>",
+  "license": "MIT"
+}

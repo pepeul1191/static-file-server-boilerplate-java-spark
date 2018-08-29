@@ -13,4 +13,7 @@ buildNumber.properties
 src/main/resources/public/bower_components
 src/main/resources/public/dist
 
+/node_modules
+package-lock.json
+
 Gemfile.lock
