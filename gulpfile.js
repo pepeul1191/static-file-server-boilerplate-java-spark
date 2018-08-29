@@ -7,9 +7,9 @@ var replace = require('gulp-replace');
 var plumber = require('gulp-plumber');
 var watch = require('gulp-watch');
 var sass = require('gulp-sass');
-var BASE_URL = 'http://localhost:9090/';
-var DESTINO = 'dist/';
-var MEDIA = ''
+var BASE_URL = 'http://localhost:4000/';
+var DESTINO = 'src/main/resources/public/dist/';
+var MEDIA = 'src/main/resources/public';
 
 // ----------------------------------------------------------------
 function errorLog(error){
