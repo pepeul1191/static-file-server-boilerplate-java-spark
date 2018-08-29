@@ -10,7 +10,7 @@ buildNumber.properties
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
-src/main/java/assets/bower_components
-src/main/java/dist
+src/main/resources/public/bower_components
+src/main/resources/public/dist
 
 Gemfile.lock
