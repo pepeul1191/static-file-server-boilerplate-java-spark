@@ -6,6 +6,15 @@ import static spark.Spark.port;
 import static spark.Spark.options;
 import static spark.Spark.before;
 import static spark.Spark.get;
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.Version;
+import java.io.StringWriter;
+import static spark.Spark.halt;
+import java.util.Map;
+import spark.Spark;
 import configs.FilterHandler;
 
 public class App {
@@ -37,5 +46,21 @@ public class App {
 		get("/test/conexion", (request, response) -> {
 			return "Conxión OK";
 		});
-  }
+	}
+	
+	public static StringWriter render(String template, Map model){
+		StringWriter writer = new StringWriter();
+		Configuration configuration = new Configuration(new Version(2, 3, 0));
+    configuration.setClassForTemplateLoading(App.class, "/templates");
+		try {
+			Template resultTemplate = configuration.getTemplate(template);
+			Config constants = ConfigFactory.defaultApplication();
+			model.put("constants", constants);
+			resultTemplate.process(model, writer);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Spark.halt(500);
+		}
+		return writer;
+	} 
 }
