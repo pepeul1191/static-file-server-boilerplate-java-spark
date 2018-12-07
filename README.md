@@ -19,6 +19,19 @@ Cargar dependencias bower y npm:
 Ejecutar Main Class usando Maven:
 
     $ mvn clean && mvn install && mvn exec:java -Dexec.mainClass="configs.App"
+    
+### BDD con cucumber
+
+Instalación de dependencias:
+
+	$ gem install cucumber
+	$ bundler install
+
+Ejecutar pruebas:
+
+	$ cucumber 
+    $ cucumber features/<file_name>.feature
+
 
 --- 
 
