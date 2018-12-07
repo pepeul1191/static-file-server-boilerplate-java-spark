@@ -19,6 +19,7 @@ import spark.Spark;
 import configs.FilterHandler;
 import handlers.ErrorHandler;
 import handlers.LoginHandler;
+import handlers.UserHandler;
 
 public class App {
   public static void main(String args[]){
@@ -29,7 +30,7 @@ public class App {
 		staticFiles.header("Access-Control-Allow-Headers",  "*");
 		//staticFiles.expireTime(600);
 		//puerto
-		port(4000);
+		port(3100);
 		//CORS
 		options("/*", (request, response) -> {
 			String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
@@ -50,6 +51,7 @@ public class App {
 		//rutas a error
 		get("/access/error/:error", ErrorHandler.index);
 		//rutas de servicios REST a handlers
+		post("/user/access", UserHandler.access);
 		//errors si no encuentra recurso
 		get("/*", ErrorHandler.errorGET);
 		post("/*", ErrorHandler.errorPOST);
