@@ -30,9 +30,11 @@ public class App {
 		staticFiles.header("Access-Control-Allow-Headers",  "*");
 		//staticFiles.expireTime(600);
 		//puerto
+		
 		port(3100);
 		//CORS
 		options("/*", (request, response) -> {
+			System.out.println("XD");
 			String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
 			if (accessControlRequestHeaders != null) {
 				response.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
@@ -52,6 +54,7 @@ public class App {
 		get("/access/error/:error", ErrorHandler.index);
 		//rutas de servicios REST a handlers
 		post("/user/access", UserHandler.access);
+		post("/user/reset_by_email", UserHandler.resetByEmail);
 		//errors si no encuentra recurso
 		get("/*", ErrorHandler.errorGET);
 		post("/*", ErrorHandler.errorPOST);

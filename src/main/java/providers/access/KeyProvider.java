@@ -11,7 +11,7 @@ import com.typesafe.config.ConfigFactory;
 public class KeyProvider {
   private static Config constants = ConfigFactory.defaultApplication().getConfig("services.access");
 
-  public static String resetByEmail(Session session, String email) throws HttpException, StatusErrorException, Exception{
+  public static String resetByEmail(String lang, String email) throws HttpException, StatusErrorException, Exception{
     String rpta = "";
     try {
       Post req = Http.post(constants.getString("url") + "key/reset_by_email")
@@ -19,18 +19,15 @@ public class KeyProvider {
         .header(constants.getString("csrf_key"), constants.getString("csrf_value"));
       rpta = req.text();
       if (!rpta.equalsIgnoreCase("user_not_found") && req.responseCode() != 200){
-        String lang = session.attribute("lang");
         String error = ConfigFactory.parseResources("errors/provider_access_key.conf").getConfig(lang).getString("list-neq200") + "::" + rpta;
         throw new StatusErrorException(error, null); 
       }
 		} catch (HttpException e) {
 			//e.printStackTrace();
-      String lang = session.attribute("lang");
       String error = ConfigFactory.parseResources("errors/provider_access_key.conf").getConfig(lang).getString("http-exception") + "::" + e.toString();
       throw new HttpException(error, e);  
     } catch (Exception e) {
       //e.printStackTrace();
-      String lang = session.attribute("lang");
       String error = ConfigFactory.parseResources("errors/provider_cipher_encrypt.conf").getConfig(lang).getString("exception") + "::" + e.toString();
       throw new Exception(error, e);  
     } 
