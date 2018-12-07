@@ -6,6 +6,7 @@ import static spark.Spark.port;
 import static spark.Spark.options;
 import static spark.Spark.before;
 import static spark.Spark.get;
+import static spark.Spark.post;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import freemarker.template.Configuration;
@@ -16,6 +17,8 @@ import static spark.Spark.halt;
 import java.util.Map;
 import spark.Spark;
 import configs.FilterHandler;
+import handlers.ErrorHandler;
+import handlers.LoginHandler;
 
 public class App {
   public static void main(String args[]){
@@ -42,6 +45,14 @@ public class App {
 		//filters
 		before("*", FilterHandler.setHeaders);
 		before("*", FilterHandler.ambinteLogs);
+		//rutas a login
+		get("/login", LoginHandler.index);
+		//rutas a error
+		get("/access/error/:error", ErrorHandler.index);
+		//rutas de servicios REST a handlers
+		//errors si no encuentra recurso
+		get("/*", ErrorHandler.errorGET);
+		post("/*", ErrorHandler.errorPOST);
 		//ruta de test/conexion
 		get("/test/conexion", (request, response) -> {
 			return "Conxión OK";

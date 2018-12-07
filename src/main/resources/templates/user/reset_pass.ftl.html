@@ -1,0 +1,23 @@
+<#include "../layouts/blank_header.ftl.html"/>
+<form class="form-signin" action="${constants.getString("base_url")}user/reset_password" method="post">
+  <a href="${constants.getString("base_url")}">
+    <img src="${constants.getString("static_url")}assets/img/CanchasLogo.png" height="130" width="240" class="mb-4 brand" alt="Canchas-Login">
+  </a>
+  <h1 class="h3 mb-3 font-weight-normal">${content.getString("form_title")}</h1>
+  <input type="hidden" name="${constants.getString("csrf.key")}" value="${constants.getString("csrf.secret")}">
+  <span class="extraData"></span>
+  <!--USER_ID-->
+  <input type="hidden" name="user_id" value="${user_id}">
+  <!--EMAIL 1 -->
+  <label for="password1" class="sr-only">Password 1</label>
+  <input type="password" id="password1" class="form-control" placeholder="${content.getString("placeholder_password")}" style="margin-bottom:0px;" required="" autofocus="" name="pass1">
+  <!--EMAIL 2 -->
+  <label for="password2" class="sr-only">Password 2</label>
+  <input type="password" id="password2" class="form-control" placeholder="${content.getString("placeholder_password_repeat")}" required="" autofocus="" name="pass2">
+  <p class="${message_type} message" id="login-message" style="margin-top: 15px;">${message}</p>
+  <!--BUTTON -->
+  <button class="btn btn-lg btn-primary btn-block" type="submit">
+    ${content.getString("button")}
+  </button>
+</form>
+<#include "../layouts/blank_footer.ftl.html"/>

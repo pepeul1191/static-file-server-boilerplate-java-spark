@@ -1,0 +1,13 @@
+<#include "../layouts/blank_header.ftl.html"/>
+<div class="row text-center">
+  <h1 class="align-text-bottom">
+    <i class="${icon}"></i>
+  </h1>
+</div>
+<div class="row text-center">
+	<div class="error-divider">
+		<h2>${message}</h2>
+	</div>
+	<a href="${constants.getString("base_url")}login" class="return-btn"><i class="fa fa-home"></i>Ir al Inicio</a>
+</div>
+<#include "../layouts/blank_footer.ftl.html"/>

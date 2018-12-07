@@ -3,6 +3,8 @@ package configs;
 import spark.Filter;
 import spark.Request;
 import spark.Response;
+import org.json.JSONObject;
+import static spark.Spark.halt;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
@@ -23,4 +25,83 @@ public class FilterHandler{
       System.out.println(request.requestMethod() + " - " + request.pathInfo());
     }
   };
+
+  public static Filter ambienteCSRF = (Request request, Response response) -> {
+    Config constants = ConfigFactory.defaultApplication();
+    if(constants.getString("ambiente_csrf").equalsIgnoreCase("activo")){
+      String csrfKey = constants.getString("csrf.key");
+      String csrfValue = constants.getString("csrf.secret");
+      String[] error = new String[2];
+      boolean continuar = true;
+      try{
+        String csrfRequestValue = request.headers(csrfKey);
+        if(!csrfRequestValue.equalsIgnoreCase(csrfValue) ){
+          error[0] = "No se puede acceder al recurso"; 
+          error[1] = "CSRF Token error";
+          continuar = false;
+        }
+      }catch(NullPointerException e){
+        //e.printStackTrace();
+        error[0] = "No se puede acceder al recurso"; 
+        error[1] = "CSRF Token key error";
+        continuar = false;
+      }
+      if(continuar == false){
+        JSONObject rptaJSON = new JSONObject();
+        rptaJSON.put("tipo_mensaje", "error");
+        rptaJSON.put("mensaje", error);
+        String rpta = rptaJSON.toString();
+        halt(500, rpta);
+      }      
+    }
+  };
+
+  public static Filter sessionTrue = (Request request, Response response) -> {
+    Config constants = ConfigFactory.defaultApplication();
+    if(constants.getString("ambiente_session").equalsIgnoreCase("activo")){
+      boolean error = false;
+      request.session(true);
+      try {
+        Boolean sessionActiva = (Boolean)request.session().attribute("activo");
+        if(sessionActiva == true){
+          error = false;
+        }
+      } catch (java.lang.NullPointerException e) {
+        error = true;
+      }
+      if(error == true){
+        response.redirect(constants.getString("base_url") + "access/error/505");
+      }
+    }
+  };
+
+  public static Filter sessionFalse = (Request request, Response response) -> {
+    Config constants = ConfigFactory.defaultApplication();
+    if(constants.getString("ambiente_session").equalsIgnoreCase("activo")){
+      boolean error = false;
+      request.session(true);
+      try {
+        Boolean sessionActiva = (Boolean)request.session().attribute("activo");
+        if(sessionActiva == true){
+          error = false;
+        }
+      } catch (java.lang.NullPointerException e) {
+        error = true;
+      }
+      if(error == false){
+        response.redirect(constants.getString("base_url"));
+      }
+    }
+  };
+
+  public static Filter sessionLanguage = (Request request, Response response) -> {
+    Config constants = ConfigFactory.defaultApplication();
+    try {
+      if(request.session().attribute("lang") == null){
+        request.session().attribute("lang", constants.getString("default_language"));
+      }
+    } catch (java.lang.NullPointerException e) {
+      e.printStackTrace();
+    }
+  };  
 }

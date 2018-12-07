@@ -1,0 +1,35 @@
+<#include "../layouts/blank_header.ftl.html"/>
+<form class="form-signin" action="${constants.getString("base_url")}login/sign_in" method="post">
+  <a href="${constants.getString("base_url")}">
+    <img src="${constants.getString("static_url")}assets/img/CanchasLogo.png" height="130" width="240" class="mb-4 brand" alt="Canchas-Login">
+  </a>
+  <h1 class="h3 mb-3 font-weight-normal">${content.getString("form_title")}</h1>
+  <input type="hidden" disabled name="${constants.getString("csrf.key")}" value="${constants.getString("csrf.secret")}">
+  <span class="extraData"></span>
+  <!--NAME -->
+  <label for="name" class="sr-only">Name</label>
+  <input type="text" disabled id="name" class="form-control" placeholder="${content.getString("placeholder_name")}" required="" autofocus="" name="name">
+  <!--USER -->
+  <label for="user" class="sr-only">User</label>
+  <input type="text" disabled id="user" class="form-control" placeholder="${content.getString("placeholder_user")}" required="" autofocus="" name="user">
+  <!--PASS -->
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" disabled id="inputPassword" class="form-control" placeholder="${content.getString("placeholder_password")}" required="" name="pass">
+  <!--EMAIL -->
+  <label for="email" class="sr-only">Email</label>
+  <input type="email" disabled id="email" class="form-control" placeholder="${content.getString("placeholder_email")}" required="" autofocus="" name="email">
+  <!--MESSAGE-->
+  <p class="${message_type} message" id="login-message" style="margin-top: 15px;">${message}</p>
+  <!--BUTTON -->
+  <button class="btn btn-lg btn-primary btn-block" type="submit" disabled>
+    ${content.getString("button")}
+  </button>
+  <!--FooTER LOGIN NAV -->
+  <div class="link-login">
+    <a href="${constants.getString("base_url")}login">
+      ${content.getString("login")}
+    </a>
+  </div>
+  <p class="mt-5 mb-3 text-muted">Powered By <a href="http://softweb.pe/"> Softtware Web Perú</a> © 2017-2018</p>
+</form>
+<#include "../layouts/blank_footer.ftl.html"/>

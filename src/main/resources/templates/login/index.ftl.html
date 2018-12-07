@@ -1,0 +1,32 @@
+<#include "../layouts/blank_header.ftl.html"/>
+<form class="form-signin" action="${constants.getString("base_url")}login" method="post">
+  <a href="${constants.getString("base_url")}">
+    <img src="${constants.getString("static_url")}assets/img/CanchasLogo.png" height="130" width="240" class="mb-4 brand" alt="Canchas-Login">
+  </a>
+  <h1 class="h3 mb-3 font-weight-normal">${content.getString("form_title")}</h1>
+  <input type="hidden" name="${constants.getString("csrf.key")}" value="${constants.getString("csrf.secret")}">
+  <span class="extraData"></span>
+  <!--USER -->
+  <label for="user" class="sr-only">Email address</label>
+  <input type="text" id="user" class="form-control" placeholder="${content.getString("placeholder_user")}" required="" autofocus="" name="user">
+  <!--PASS -->
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="${content.getString("placeholder_password")}" required="" name="pass">
+  <!--MESSAGE-->
+  <p class="color-error message" style="margin-top:10px;" id="login-message">${message}</p>
+  <!--BUTTON -->
+  <button class="btn btn-lg btn-primary btn-block" type="submit">
+    ${content.getString("button")}
+  </button>
+  <!--FooTER LOGIN NAV -->
+  <div class="link-login">
+    <a class="" href="${constants.getString("base_url")}login/sign_in">
+      ${content.getString("sign_in")}
+    </a>
+    <a id="forgotpassword" class=" pull-right" href="${constants.getString("base_url")}login/reset_password">
+      ${content.getString("reset")}
+    </a>
+  </div>
+  <p class="mt-5 mb-3 text-muted">Powered By <a href="http://softweb.pe/"> Softtware Web Perú</a> © 2017-2018</p>
+</form>
+<#include "../layouts/blank_footer.ftl.html"/>
