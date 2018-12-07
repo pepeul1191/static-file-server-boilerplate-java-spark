@@ -92,3 +92,8 @@ body {
 	border-radius: 0px;
 	border: 1px solid #c5cbd0;
 }
+
+.link-movil{
+  font-weight: 600;
+  color: var(--error-color);
+}

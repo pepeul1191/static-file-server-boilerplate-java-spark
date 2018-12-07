@@ -8,22 +8,22 @@
   <span class="extraData"></span>
   <!--USER -->
   <label for="user" class="sr-only">Email address</label>
-  <input type="text" id="user" class="form-control" placeholder="${content.getString("placeholder_user")}" required="" autofocus="" name="user">
+  <input type="text" disabled id="user" class="form-control" placeholder="${content.getString("placeholder_user")}" required="" autofocus="" name="user">
   <!--PASS -->
   <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" id="inputPassword" class="form-control" placeholder="${content.getString("placeholder_password")}" required="" name="pass">
+  <input type="password" disabled id="inputPassword" class="form-control" placeholder="${content.getString("placeholder_password")}" required="" name="pass">
   <!--MESSAGE-->
   <p class="color-error message" style="margin-top:10px;" id="login-message">${message}</p>
   <!--BUTTON -->
-  <button class="btn btn-lg btn-primary btn-block" type="submit">
+  <button disabled class="btn btn-lg btn-primary btn-block" type="submit">
     ${content.getString("button")}
   </button>
   <!--FooTER LOGIN NAV -->
   <div class="link-login">
-    <a class="" href="${constants.getString("base_url")}login/sign_in">
+    <a class="" hreff="${constants.getString("base_url")}login/sign_in">
       ${content.getString("sign_in")}
     </a>
-    <a id="forgotpassword" class=" pull-right" href="${constants.getString("base_url")}login/reset_password">
+    <a id="forgotpassword" class=" pull-right" hreff="${constants.getString("base_url")}login/reset_password"  >
       ${content.getString("reset")}
     </a>
   </div>
