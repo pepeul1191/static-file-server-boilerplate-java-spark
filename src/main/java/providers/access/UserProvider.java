@@ -12,7 +12,7 @@ import com.typesafe.config.ConfigFactory;
 public class UserProvider {
   private static Config constants = ConfigFactory.defaultApplication().getConfig("services.access");
   
-  public static String create(Session session, String language, String user, String pass, String email, String systemId) throws HttpException, StatusErrorException, Exception{
+  public static String create(String lang, String user, String pass, String email, String systemId) throws HttpException, StatusErrorException, Exception{
     String rpta = "";
     try {
       Post req = Http.post(constants.getString("url") + "user/create")
@@ -23,18 +23,15 @@ public class UserProvider {
         .header(constants.getString("csrf_key"), constants.getString("csrf_value"));
       int responseCode = req.responseCode();
       rpta = req.text();
-      if (responseCode == 501){
-        String lang = session.attribute("lang");
-        String error = ConfigFactory.parseResources("errors/provider_access_user.conf").getConfig(lang).getString("create.status501") + "::" + rpta;
+      if (responseCode == 501){  
+        String error = "repeated";
         throw new StatusErrorException(error, null);  
-      }else if (responseCode != 200 && responseCode != 501){ 
-        String lang = session.attribute("lang");
+      }else if (responseCode != 200 && responseCode != 501){   
         String error = ConfigFactory.parseResources("errors/provider_access_user.conf").getConfig(lang).getString("create.exception") + "::" + rpta;
         throw new StatusErrorException(error, null);    
       }
 		} catch (HttpException e) {
 			//e.printStackTrace();
-      String lang = session.attribute("lang");
       String error = ConfigFactory.parseResources("errors/provider_access_user.conf").getConfig(lang).getString("create.http-exception") + "::" + e.toString();
       throw new HttpException(error, e);  
     } catch (StatusErrorException e){
@@ -42,7 +39,6 @@ public class UserProvider {
       throw new StatusErrorException(e.getMessage(), null);
     } catch (Exception e) {
       //e.printStackTrace();
-      String lang = session.attribute("lang");
       String error = ConfigFactory.parseResources("errors/provider_access_user.conf").getConfig(lang).getString("create.exception") + "::" + e.toString();
       throw new Exception(error, e);  
     }

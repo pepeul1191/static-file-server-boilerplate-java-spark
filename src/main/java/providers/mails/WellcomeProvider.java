@@ -12,35 +12,33 @@ import com.typesafe.config.ConfigFactory;
 public class WellcomeProvider {
   private static Config constants = ConfigFactory.defaultApplication().getConfig("services.mail");
 
-  public static String send(Session session, String name, int userId, String activationtKey, String language, String email) throws HttpException, StatusErrorException, Exception{
+  public static String send(String name, int userId, String activationtKey, String lang, String email) throws HttpException, StatusErrorException, Exception{
     String rpta = "";
     try {
       JSONObject data = new JSONObject();
       data.put("name", name);
       data.put("user_id", userId);
       data.put("activation_key", activationtKey);
-      data.put("lang", language);
+      data.put("lang", lang);
       data.put("to", email);
       data.put("base_url", constants.getString("validation_service_url"));
-      Post req = Http.post(constants.getString("url") + "wellcome")
+      Post req = Http.post(constants.getString("url") + "wellcome_client")
         .param("data", data.toString())
         .header(constants.getString("csrf_key"), constants.getString("csrf_value"));
       rpta = req.text();
-      if(req.responseCode() != 200){
-        String lang = session.attribute("lang");
+      if(req.responseCode() != 200){        
         String error = ConfigFactory.parseResources("errors/provider_mails_wellcome.conf").getConfig(lang).getString("list-neq200") + "::" + rpta;
         throw new StatusErrorException(error, null); 
       }
 		} catch (HttpException e) {
-			//e.printStackTrace();
-      String lang = session.attribute("lang");
+			//e.printStackTrace();      
       String error = ConfigFactory.parseResources("errors/provider_mails_wellcome.conf").getConfig(lang).getString("http-exception") + "::" + e.toString();
       throw new HttpException(error, e);  
     } catch (Exception e) {
-      //e.printStackTrace();
-      String lang = session.attribute("lang");
+      //e.printStackTrace();      
       String error = ConfigFactory.parseResources("errors/provider_mails_wellcome.conf").getConfig(lang).getString("exception") + "::" + e.toString();
-      throw new Exception(error, e);  
+      System.out.println(error);
+      throw new Exception("email-error", e);  
     } 
     return rpta;
   }

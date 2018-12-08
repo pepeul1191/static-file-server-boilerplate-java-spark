@@ -55,6 +55,7 @@ public class App {
 		//rutas de servicios REST a handlers
 		post("/user/access", UserHandler.access);
 		post("/user/reset_by_email", UserHandler.resetByEmail);
+		post("/user/create", UserHandler.create);
 		//errors si no encuentra recurso
 		get("/*", ErrorHandler.errorGET);
 		post("/*", ErrorHandler.errorPOST);
