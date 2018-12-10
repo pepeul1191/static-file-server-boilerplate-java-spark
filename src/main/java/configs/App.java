@@ -56,6 +56,7 @@ public class App {
 		post("/user/access", UserHandler.access);
 		post("/user/reset_by_email", UserHandler.resetByEmail);
 		post("/user/create", UserHandler.create);
+		get("/user/get_ids", UserHandler.getIds);
 		//errors si no encuentra recurso
 		get("/*", ErrorHandler.errorGET);
 		post("/*", ErrorHandler.errorPOST);

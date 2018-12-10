@@ -139,4 +139,38 @@ public class UserHandler {
     response.status(status);
     return rpta;
   };
+
+  public static Route getIds = (Request request, Response response) -> {
+    //session language and other data
+    String lang = request.headers("lang");
+    String rpta = "";
+    int status = 500;
+    //form data
+    String user = request.queryParams("user");
+    try {
+      //get user_id from acess
+      String userId = providers.access.UserProvider.getUserId(user, lang);
+      //get player_id from managment
+      String playerId = providers.managment.PlayerProvider.getPlayerId(userId, lang);
+      JSONObject r = new JSONObject();
+      r.put("user_id", userId);
+      r.put("player_id", playerId);
+      rpta = r.toString();
+      status = 200;
+    } catch (StatusErrorException e) {  
+      rpta = e.getMessage().toString();
+      //e.printStackTrace();
+    }catch (HttpException e) {
+      rpta = e.getMessage().toString().split("::")[0];
+      System.out.println("++++++++ HttpException ++++++++");
+      //e.printStackTrace();
+    } catch (Exception e) {
+      rpta = e.getMessage().toString().split("::")[0];
+      System.out.println("++++++++ Exception ++++++++");
+      System.out.println(e.getMessage());
+      //e.printStackTrace();
+    }
+    response.status(status);
+    return rpta;
+  };
 }

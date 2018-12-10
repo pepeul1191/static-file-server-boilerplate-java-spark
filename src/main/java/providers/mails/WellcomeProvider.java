@@ -22,7 +22,7 @@ public class WellcomeProvider {
       data.put("lang", lang);
       data.put("to", email);
       data.put("base_url", constants.getString("validation_service_url"));
-      Post req = Http.post(constants.getString("url") + "wellcome_client")
+      Post req = Http.post(constants.getString("url") + "wellcome_player")
         .param("data", data.toString())
         .header(constants.getString("csrf_key"), constants.getString("csrf_value"));
       rpta = req.text();

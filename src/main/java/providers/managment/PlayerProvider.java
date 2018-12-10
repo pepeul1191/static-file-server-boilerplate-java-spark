@@ -4,6 +4,7 @@ import com.typesafe.config.Config;
 import org.javalite.http.Http;
 import org.javalite.http.HttpException;
 import org.javalite.http.Post;
+import org.javalite.http.Get;
 import org.json.JSONObject;
 
 import exceptions.StatusErrorException;
@@ -39,6 +40,32 @@ public class PlayerProvider {
     } catch (Exception e) {
       //e.printStackTrace();
       String error = ConfigFactory.parseResources("errors/provider_managment_player.conf").getConfig(lang).getString("create.exception") + "::" + e.toString();
+      throw new Exception(error, e);  
+    }
+    return rpta;
+  }
+
+  public static String getPlayerId(String userId, String lang) throws HttpException, StatusErrorException, Exception{
+    String rpta = "";
+    try {
+      Get req = Http.get(constants.getString("url") + "player/get_id_by_user_id?user_id=" + userId)
+        .header(constants.getString("csrf_key"), constants.getString("csrf_value"));
+      int responseCode = req.responseCode();
+      rpta = req.text();
+      if (responseCode != 200){ 
+        String error = ConfigFactory.parseResources("errors/provider_managment_player.conf").getConfig(lang).getString("get_player_id.neq200") + "::" + rpta;
+        throw new StatusErrorException(error, null);    
+      }
+		} catch (HttpException e) {
+			//e.printStackTrace();
+      String error = ConfigFactory.parseResources("errors/provider_managment_player.conf").getConfig(lang).getString("get_player_id.http-exception") + "::" + e.toString();
+      throw new HttpException(error, e);  
+    } catch (StatusErrorException e){
+      //e.printStackTrace();
+      throw new StatusErrorException(e.getMessage(), null);
+    } catch (Exception e) {
+      //e.printStackTrace();
+      String error = ConfigFactory.parseResources("errors/provider_managment_player.conf").getConfig(lang).getString("get_player_id.exception") + "::" + e.toString();
       throw new Exception(error, e);  
     }
     return rpta;

@@ -86,7 +86,7 @@ public class UserProvider {
     return rpta;
   }
 
-  public static String getUserId(Session session, String language, String user) throws HttpException, StatusErrorException, Exception{
+  public static String getUserId(String user, String lang) throws HttpException, StatusErrorException, Exception{
     String rpta = "";
     try {
       Get req = Http.get(constants.getString("url") + "user/get_id_by_user?user=" + user)
@@ -94,13 +94,11 @@ public class UserProvider {
       int responseCode = req.responseCode();
       rpta = req.text();
       if (responseCode != 200){ 
-        String lang = session.attribute("lang");
         String error = ConfigFactory.parseResources("errors/provider_access_user.conf").getConfig(lang).getString("get_user_id.neq200") + "::" + rpta;
         throw new StatusErrorException(error, null);    
       }
 		} catch (HttpException e) {
 			//e.printStackTrace();
-      String lang = session.attribute("lang");
       String error = ConfigFactory.parseResources("errors/provider_access_user.conf").getConfig(lang).getString("get_user_id.http-exception") + "::" + e.toString();
       throw new HttpException(error, e);  
     } catch (StatusErrorException e){
@@ -108,7 +106,6 @@ public class UserProvider {
       throw new StatusErrorException(e.getMessage(), null);
     } catch (Exception e) {
       //e.printStackTrace();
-      String lang = session.attribute("lang");
       String error = ConfigFactory.parseResources("errors/provider_access_user.conf").getConfig(lang).getString("get_user_id.exception") + "::" + e.toString();
       throw new Exception(error, e);  
     }
